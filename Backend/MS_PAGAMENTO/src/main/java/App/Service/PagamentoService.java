@@ -16,11 +16,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 @Service
 public class PagamentoService {
 
     private final PagamentoRepository pagamentoRepository;
+    
     Locale localBrasil = new Locale("pt", "BR");
     public PagamentoService(PagamentoRepository pagamentoRepository) {
         this.pagamentoRepository = pagamentoRepository;
@@ -105,7 +107,7 @@ public class PagamentoService {
                {
                    entity.setValorTroco(valorPago - entity.getValorTotal());
                }
-               if(formapagamento == FORMAPAGAMENTO.CREDITO)
+               if(formapagamento == FORMAPAGAMENTO.CREDITO && formapagamento == FORMAPAGAMENTO.DEBITO)
                {
                    entity.setValorParcela(entity.getValorTotal() / parcelas);
                }
