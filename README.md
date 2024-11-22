@@ -25,7 +25,6 @@ MS_FINANCEIRO
 
 MS_PAGAMENTO
 
-  Responsável por gerir, confirmar, ou negar pagamento mediante inicialmente randômico booleano nos casos de compras no débito, ou crédito, simulando uma api externa de autorização de transação financeira.
-  Retornando ao ms_financeiro a que por sua vez salva a informação mediante retorno true para geração do relatório financeiro.
+  Responsável por gerir, confirmar, ou negar pagamento, simulando uma api externa de autorização de transação financeira, Retornando ao ms_financeiro a que por sua vez salva a informação para geração do relatório financeiro.
 
   
