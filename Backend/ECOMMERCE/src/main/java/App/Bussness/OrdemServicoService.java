@@ -201,26 +201,18 @@ public class OrdemServicoService {
                 entity.setContato(contato);
                 ordemServicoRepository.save(entity);
                 List<ItemOrdemServicosResponseDTO> dtos = new ArrayList<>();
-                for(ItemOrdemServicoEntity itemOrdem : entity.getItems())
-                {
-                    ItemOrdemServicosResponseDTO dto = new ItemOrdemServicosResponseDTO(itemOrdem.getNome(),
-                            itemOrdem.getDescricao(),
-                            itemOrdem.getCodigo(),
-                            NumberFormat.getCurrencyInstance(localBrasil).format(itemOrdem.getValor()));
-                    dtos.add(dto);
-                }
                 OrdemServicoResponseDTO dtoResponse = new OrdemServicoResponseDTO(
                         entity.getCodigo(),
                         entity.getCliente(),
                         entity.getDataCadastro(),
                         dtos,
-                        entity.getDataInicio(),
-                        entity.getDataConclusao(),
+                        null,
+                        null,
                         NumberFormat.getCurrencyInstance(localBrasil).format(entity.getValorTotal()),
                         entity.getStatusordemservico(),
                         "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
                         entity.getContato().getEmail(),
-                        entity.getDataConclusao());
+                        null);
                 return new ResponseEntity<>(dtoResponse, HttpStatus.CREATED);
             }
             else
@@ -243,40 +235,43 @@ public class OrdemServicoService {
                OrdemServicoEntity entity = ordemServicoRepository.findById(idOrdemServico).orElseThrow(
                        ()-> new EntityNotFoundException()
                );
-               //chama ms_servico
-               ItemOrdemServicoEntity itemOrdemServico = new ItemOrdemServicoEntity();
-               itemOrdemServico.setCodigo("teste");
-               itemOrdemServico.setNome("teste");
-               itemOrdemServico.setDescricao("teste");
-               itemOrdemServico.setValor(80.0);
-               itemOrdemServico.setTimeStamp(LocalDateTime.now());
-               itemOrdemServicoRepository.save(itemOrdemServico);
-               entity.setValorTotal(entity.getValorTotal()+itemOrdemServico.getValor());
-               entity.setTimeStamp(LocalDateTime.now());
-               entity.getItems().add(itemOrdemServico);
-               ordemServicoRepository.save(entity);
-                List<ItemOrdemServicosResponseDTO> dtos = new ArrayList<>();
-                for(ItemOrdemServicoEntity itemOrdem : entity.getItems())
-                {
-                    ItemOrdemServicosResponseDTO dto = new ItemOrdemServicosResponseDTO(itemOrdem.getNome(),
-                            itemOrdem.getDescricao(),
-                            itemOrdem.getCodigo(),
-                            NumberFormat.getCurrencyInstance(localBrasil).format(itemOrdem.getValor()));
-                    dtos.add(dto);
-                }
-                OrdemServicoResponseDTO dtoResponse = new OrdemServicoResponseDTO(
-                        entity.getCodigo(),
-                        entity.getCliente(),
-                        entity.getDataCadastro(),
-                        dtos,
-                        entity.getDataInicio(),
-                        entity.getDataConclusao(),
-                        NumberFormat.getCurrencyInstance(localBrasil).format(entity.getValorTotal()),
-                        entity.getStatusordemservico(),
-                        "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
-                        entity.getContato().getEmail(),
-                        entity.getDataConclusao());
-                return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
+               if(entity.getStatusordemservico() == STATUSORDEMSERVICO.INICIADO)
+               {
+                   //chama ms_servico
+                   ItemOrdemServicoEntity itemOrdemServico = new ItemOrdemServicoEntity();
+                   itemOrdemServico.setCodigo("teste");
+                   itemOrdemServico.setNome("teste");
+                   itemOrdemServico.setDescricao("teste");
+                   itemOrdemServico.setValor(80.0);
+                   itemOrdemServico.setTimeStamp(LocalDateTime.now());
+                   itemOrdemServicoRepository.save(itemOrdemServico);
+                   entity.setValorTotal(entity.getValorTotal()+itemOrdemServico.getValor());
+                   entity.setTimeStamp(LocalDateTime.now());
+                   entity.getItems().add(itemOrdemServico);
+                   ordemServicoRepository.save(entity);
+                   List<ItemOrdemServicosResponseDTO> dtos = new ArrayList<>();
+                   for(ItemOrdemServicoEntity itemOrdem : entity.getItems())
+                   {
+                       ItemOrdemServicosResponseDTO dto = new ItemOrdemServicosResponseDTO(itemOrdem.getNome(),
+                               itemOrdem.getDescricao(),
+                               itemOrdem.getCodigo(),
+                               NumberFormat.getCurrencyInstance(localBrasil).format(itemOrdem.getValor()));
+                       dtos.add(dto);
+                   }
+                   OrdemServicoResponseDTO dtoResponse = new OrdemServicoResponseDTO(
+                           entity.getCodigo(),
+                           entity.getCliente(),
+                           entity.getDataCadastro(),
+                           dtos,
+                           entity.getDataInicio(),
+                           entity.getDataConclusao(),
+                           NumberFormat.getCurrencyInstance(localBrasil).format(entity.getValorTotal()),
+                           entity.getStatusordemservico(),
+                           "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
+                           entity.getContato().getEmail(),
+                           entity.getDataConclusao());
+                   return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
+               }
             }
             else
             {throw new NullargumentsException();}
@@ -289,9 +284,9 @@ public class OrdemServicoService {
     }
 
     public ResponseEntity<OrdemServicoResponseDTO> FinalizarOrdemServico(Long idOrdemServico,
-                                                                             FORMAPAGAMENTO formapagamento,
-                                                                             Double valorPago,
-                                                                             Double parcelas)
+                                                                         FORMAPAGAMENTO formapagamento,
+                                                                         Double valorPago,
+                                                                         Double parcelas)
     {
         try
         {
@@ -300,31 +295,85 @@ public class OrdemServicoService {
                 OrdemServicoEntity entity = ordemServicoRepository.findById(idOrdemServico).orElseThrow(
                         ()-> new EntityNotFoundException()
                 );
-                entity.setStatusordemservico(STATUSORDEMSERVICO.CONCLUIDO);
-                entity.setTimeStamp(LocalDateTime.now());
-                ordemServicoRepository.save(entity);
-                List<ItemOrdemServicosResponseDTO> dtos = new ArrayList<>();
-                for(ItemOrdemServicoEntity itemOrdem : entity.getItems())
+                if(entity.getStatusordemservico() == STATUSORDEMSERVICO.INICIADO)
                 {
-                    ItemOrdemServicosResponseDTO dto = new ItemOrdemServicosResponseDTO(itemOrdem.getNome(),
-                            itemOrdem.getDescricao(),
-                            itemOrdem.getCodigo(),
-                            NumberFormat.getCurrencyInstance(localBrasil).format(itemOrdem.getValor()));
-                    dtos.add(dto);
+                    entity.setStatusordemservico(STATUSORDEMSERVICO.CONCLUIDO);
+                    entity.setTimeStamp(LocalDateTime.now());
+                    entity.setDataConclusao(LocalDateTime.now());
+                    ordemServicoRepository.save(entity);
+                    List<ItemOrdemServicosResponseDTO> dtos = new ArrayList<>();
+                    for(ItemOrdemServicoEntity itemOrdem : entity.getItems())
+                    {
+                        ItemOrdemServicosResponseDTO dto = new ItemOrdemServicosResponseDTO(itemOrdem.getNome(),
+                                itemOrdem.getDescricao(),
+                                itemOrdem.getCodigo(),
+                                NumberFormat.getCurrencyInstance(localBrasil).format(itemOrdem.getValor()));
+                        dtos.add(dto);
+                    }
+                    OrdemServicoResponseDTO dtoResponse = new OrdemServicoResponseDTO(
+                            entity.getCodigo(),
+                            entity.getCliente(),
+                            entity.getDataCadastro(),
+                            dtos,
+                            entity.getDataInicio(),
+                            entity.getDataConclusao(),
+                            NumberFormat.getCurrencyInstance(localBrasil).format(entity.getValorTotal()),
+                            entity.getStatusordemservico(),
+                            "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
+                            entity.getContato().getEmail(),
+                            entity.getDataConclusao());
+                    return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
                 }
-                OrdemServicoResponseDTO dtoResponse = new OrdemServicoResponseDTO(
-                        entity.getCodigo(),
-                        entity.getCliente(),
-                        entity.getDataCadastro(),
-                        dtos,
-                        entity.getDataInicio(),
-                        entity.getDataConclusao(),
-                        NumberFormat.getCurrencyInstance(localBrasil).format(entity.getValorTotal()),
-                        entity.getStatusordemservico(),
-                        "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
-                        entity.getContato().getEmail(),
-                        entity.getDataConclusao());
-                return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
+            }
+            else
+            { throw new NullargumentsException();}
+        }
+        catch (Exception e)
+        {
+            e.getMessage();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+
+    public ResponseEntity<OrdemServicoResponseDTO> IniciarOrdemServico(Long idOrdemServico)
+    {
+        try
+        {
+            if(idOrdemServico != null)
+            {
+                OrdemServicoEntity entity = ordemServicoRepository.findById(idOrdemServico).orElseThrow(
+                        ()-> new EntityNotFoundException()
+                );
+                if(entity.getStatusordemservico() == STATUSORDEMSERVICO.AGUARDANDO)
+                {
+                    entity.setStatusordemservico(STATUSORDEMSERVICO.INICIADO);
+                    entity.setTimeStamp(LocalDateTime.now());
+                    entity.setDataInicio(LocalDateTime.now());
+                    ordemServicoRepository.save(entity);
+                    List<ItemOrdemServicosResponseDTO> dtos = new ArrayList<>();
+                    for(ItemOrdemServicoEntity itemOrdem : entity.getItems())
+                    {
+                        ItemOrdemServicosResponseDTO dto = new ItemOrdemServicosResponseDTO(itemOrdem.getNome(),
+                                itemOrdem.getDescricao(),
+                                itemOrdem.getCodigo(),
+                                NumberFormat.getCurrencyInstance(localBrasil).format(itemOrdem.getValor()));
+                        dtos.add(dto);
+                    }
+                    OrdemServicoResponseDTO dtoResponse = new OrdemServicoResponseDTO(
+                            entity.getCodigo(),
+                            entity.getCliente(),
+                            entity.getDataCadastro(),
+                            dtos,
+                            entity.getDataInicio(),
+                            entity.getDataConclusao(),
+                            NumberFormat.getCurrencyInstance(localBrasil).format(entity.getValorTotal()),
+                            entity.getStatusordemservico(),
+                            "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
+                            entity.getContato().getEmail(),
+                            entity.getDataConclusao());
+                    return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
+                }
             }
             else
             { throw new NullargumentsException();}
