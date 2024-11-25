@@ -1,9 +1,11 @@
 package App.Api;
 
-import App.Bussness.OrdemServicoService;
 import App.Domain.OrdemServicoResponseDTO;
 import App.Domain.OrdemServicoResponseFullDTO;
 import App.Infra.Persistence.Enum.FORMAPAGAMENTO;
+import App.Infra.UseCase.UseCaseOrdemServicoGet;
+import App.Infra.UseCase.UseCaseOrdemServicoPost;
+import App.Infra.UseCase.UseCaseOrdemServicoPut;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,11 +22,16 @@ import java.util.List;
 )
 public class OrdemServicoController {
 
-    private final OrdemServicoService service;
+    private final UseCaseOrdemServicoGet caseOrdemServicoGet;
+    private final UseCaseOrdemServicoPost caseOrdemServicoPost;
+    private final UseCaseOrdemServicoPut caseOrdemServicoPut;
 
-    public OrdemServicoController(OrdemServicoService service) {
-        this.service = service;
+    public OrdemServicoController(UseCaseOrdemServicoGet caseOrdemServicoGet, UseCaseOrdemServicoPost caseOrdemServicoPost, UseCaseOrdemServicoPut caseOrdemServicoPut) {
+        this.caseOrdemServicoGet = caseOrdemServicoGet;
+        this.caseOrdemServicoPost = caseOrdemServicoPost;
+        this.caseOrdemServicoPut = caseOrdemServicoPut;
     }
+
 
     @Operation(summary = "Lista Registros da tabela", method = "GET")
     @ApiResponses(value = {
@@ -35,7 +42,7 @@ public class OrdemServicoController {
     })
     @GetMapping("/ListarOrdemServico")
     public ResponseEntity<List<OrdemServicoResponseFullDTO>> ListarOrdemServico()
-    { return service.ListarOrdemServico();}
+    { return caseOrdemServicoGet.ListarOrdemServico();}
 
     @Operation(summary = "Busca Registros da tabela por Id", method = "GET")
     @ApiResponses(value = {
@@ -46,7 +53,7 @@ public class OrdemServicoController {
     })
     @GetMapping("/BuscarOrdemServicoPorId")
     public ResponseEntity<OrdemServicoResponseFullDTO> BuscarOrdemServicoPorId(@RequestParam Long id)
-    { return service.BuscarOrdemServicoPorId(id);}
+    { return caseOrdemServicoGet.BuscarOrdemServicoPorId(id);}
 
     @Operation(summary = "Busca Registros da tabela por Código", method = "GET")
     @ApiResponses(value = {
@@ -57,7 +64,7 @@ public class OrdemServicoController {
     })
     @GetMapping("/BuscarOrdemServicoPorcodigo")
     public ResponseEntity<OrdemServicoResponseFullDTO> BuscarOrdemServicoPorcodigo(@RequestParam String codigo)
-    { return service.BuscarOrdemServicoPorcodigo(codigo);}
+    { return caseOrdemServicoGet.BuscarOrdemServicoPorcodigo(codigo);}
 
     @Operation(summary = "Salva novo Registro na tabela", method = "POST")
     @ApiResponses(value = {
@@ -73,7 +80,7 @@ public class OrdemServicoController {
                                                                     @RequestParam Long telefone,
                                                                     String email,
                                                                     @RequestParam String relato)
-    { return service.NovaOrdemServico(idCliente, cliente, prefixo, telefone, email, relato);}
+    { return caseOrdemServicoPost.NovaOrdemServico(idCliente, cliente, prefixo, telefone, email, relato);}
 
     @Operation(summary = "Edita Registro na tabela", method = "PUT")
     @ApiResponses(value = {
@@ -85,7 +92,7 @@ public class OrdemServicoController {
     @PutMapping("/AdicionarServico")
     public ResponseEntity<OrdemServicoResponseDTO> AdicionarServico(@RequestParam Long idOrdemServico,
                                                                     @RequestParam Long idServico)
-    {return service.AdicionarServico(idOrdemServico, idServico);}
+    {return caseOrdemServicoPut.AdicionarServico(idOrdemServico, idServico);}
 
     @Operation(summary = "Edita Registro na tabela", method = "PUT")
     @ApiResponses(value = {
@@ -96,7 +103,7 @@ public class OrdemServicoController {
     })
     @PutMapping("/IniciarOrdemServico")
     public ResponseEntity<OrdemServicoResponseDTO> IniciarOrdemServico(@RequestParam Long idOrdemServico)
-    { return service.IniciarOrdemServico(idOrdemServico);}
+    { return caseOrdemServicoPut.IniciarOrdemServico(idOrdemServico);}
 
     @Operation(summary = "Edita Registro na tabela", method = "PUT")
     @ApiResponses(value = {
@@ -110,6 +117,6 @@ public class OrdemServicoController {
                                                                          @RequestParam FORMAPAGAMENTO formapagamento,
                                                                          Double valorPago,
                                                                          Double parcelas)
-    { return service.FinalizarOrdemServico(idOrdemServico, formapagamento, valorPago, parcelas);}
+    { return caseOrdemServicoPut.FinalizarOrdemServico(idOrdemServico, formapagamento, valorPago, parcelas);}
 
 }

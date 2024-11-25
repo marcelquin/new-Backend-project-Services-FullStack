@@ -6,6 +6,7 @@ import App.Domain.OrdemServicoResponseFullDTO;
 import App.Infra.Exceptions.EntityNotFoundException;
 import App.Infra.Exceptions.IllegalActionException;
 import App.Infra.Exceptions.NullargumentsException;
+import App.Infra.Gateway.OrdemServicoGateway;
 import App.Infra.Persistence.Entity.ContatoEntity;
 import App.Infra.Persistence.Entity.ItemOrdemServicoEntity;
 import App.Infra.Persistence.Entity.OrdemServicoEntity;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class OrdemServicoService {
+public class OrdemServicoService implements OrdemServicoGateway {
 
     private final OrdemServicoRepository ordemServicoRepository;
     private final ItemOrdemServicoRepository itemOrdemServicoRepository;
@@ -38,8 +39,8 @@ public class OrdemServicoService {
         this.itemOrdemServicoRepository = itemOrdemServicoRepository;
         this.contatoRepository = contatoRepository;
     }
-    //NumberFormat.getCurrencyInstance(localBrasil).format(item.getServico().getValor()));
 
+    @Override
     public ResponseEntity<List<OrdemServicoResponseFullDTO>> ListarOrdemServico()
     {
         try
@@ -79,7 +80,7 @@ public class OrdemServicoService {
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
-
+    @Override
     public ResponseEntity<OrdemServicoResponseFullDTO> BuscarOrdemServicoPorId(Long id)
     {
         try
@@ -121,7 +122,7 @@ public class OrdemServicoService {
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
-
+    @Override
     public ResponseEntity<OrdemServicoResponseFullDTO> BuscarOrdemServicoPorcodigo(String codigo)
     {
         try
@@ -163,7 +164,7 @@ public class OrdemServicoService {
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
-
+    @Override
     public ResponseEntity<OrdemServicoResponseDTO> NovaOrdemServico(Long idCliente,
                                                                     String cliente,
                                                                     Long prefixo,
@@ -225,6 +226,7 @@ public class OrdemServicoService {
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @Override
     public ResponseEntity<OrdemServicoResponseDTO> AdicionarServico(Long idOrdemServico,
                                                                         Long idServico)
     {
@@ -283,6 +285,7 @@ public class OrdemServicoService {
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @Override
     public ResponseEntity<OrdemServicoResponseDTO> FinalizarOrdemServico(Long idOrdemServico,
                                                                          FORMAPAGAMENTO formapagamento,
                                                                          Double valorPago,
@@ -335,7 +338,7 @@ public class OrdemServicoService {
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-
+    @Override
     public ResponseEntity<OrdemServicoResponseDTO> IniciarOrdemServico(Long idOrdemServico)
     {
         try
