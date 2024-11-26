@@ -1,4 +1,4 @@
-package App.Infra.UseCase;
+package App.Infra.UseCase.OrdemServico;
 
 import App.Domain.OrdemServicoResponseDTO;
 import App.Infra.Gateway.OrdemServicoGateway;

@@ -1,8 +1,11 @@
-package APP.Controller;
+package App.Api;
 
-import APP.DTO.ServicoDTO;
-import APP.DTO.ServicoResponseDTO;
-import APP.Service.ProdutoService;
+import App.Domain.Response.ServicoDTO;
+import App.Domain.Response.ServicoResponseDTO;
+import App.Infra.UseCase.Servico.UseCaseServicoDelete;
+import App.Infra.UseCase.Servico.UseCaseServicoGet;
+import App.Infra.UseCase.Servico.UseCaseServicoPost;
+import App.Infra.UseCase.Servico.UseCaseServicoPut;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,18 +16,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("ms_Servico")
-@Tag(name = "msProduto",
-        description = "Gerencia informações referente a entidade")
-@CrossOrigin(origins = "*")
-public class ProdutoController {
+@RequestMapping("servico")
+@Tag(name = "servico",
+        description = "Manipula dados referente a entidade"
+)
+public class ServicoController {
 
-    private final ProdutoService service;
+    private final UseCaseServicoGet caseServicoGet;
+    private final UseCaseServicoPost caseServicoPost;
+    private final UseCaseServicoPut caseServicoPut;
+    private final UseCaseServicoDelete caseServicoDelete;
 
 
-    public ProdutoController(ProdutoService service) {
-        this.service = service;
+    public ServicoController(UseCaseServicoGet caseServicoGet, UseCaseServicoPost caseServicoPost, UseCaseServicoPut caseServicoPut, UseCaseServicoDelete caseServicoDelete) {
+        this.caseServicoGet = caseServicoGet;
+        this.caseServicoPost = caseServicoPost;
+        this.caseServicoPut = caseServicoPut;
+        this.caseServicoDelete = caseServicoDelete;
     }
+
 
     @Operation(summary = "Busca Registros da tabela", method = "GET")
     @ApiResponses(value = {
@@ -35,7 +45,7 @@ public class ProdutoController {
     })
     @GetMapping("/ListarServicos")
     public ResponseEntity<List<ServicoDTO>> ListarServicos()
-    {return service.ListarServicos();}
+    {return caseServicoGet.ListarServicos();}
 
     @Operation(summary = "Busca Registro da tabela Por Id", method = "GET")
     @ApiResponses(value = {
@@ -46,7 +56,7 @@ public class ProdutoController {
     })
     @GetMapping("/BuscarServicoPorId")
     public ResponseEntity<ServicoResponseDTO> BuscarServicoPorId(@RequestParam Long id)
-    { return service.BuscarServicoPorId(id);}
+    { return caseServicoGet.BuscarServicoPorId(id);}
 
     @Operation(summary = "Salva novo Registro na tabela", method = "POST")
     @ApiResponses(value = {
@@ -60,7 +70,7 @@ public class ProdutoController {
                                                           @RequestParam String descricao,
                                                           @RequestParam Double valorServico,
                                                           @RequestParam Double valorMaoDeObra)
-    { return service.NovoServico(nome, descricao, valorServico, valorMaoDeObra);}
+    { return caseServicoPost.NovoServico(nome, descricao, valorServico, valorMaoDeObra);}
 
     @Operation(summary = "Altera Informação do Registro na tabela", method = "PUT")
     @ApiResponses(value = {
@@ -75,7 +85,7 @@ public class ProdutoController {
                                                             @RequestParam String descricao,
                                                             @RequestParam Double valorServico,
                                                             @RequestParam Double valorMaoDeObra)
-    {return service.EditarServico(id, nome, descricao, valorServico, valorMaoDeObra);}
+    {return caseServicoPut.EditarServico(id, nome, descricao, valorServico, valorMaoDeObra);}
 
     @Operation(summary = "Altera Informação do Registro na tabela", method = "PUT")
     @ApiResponses(value = {
@@ -87,7 +97,7 @@ public class ProdutoController {
     @PutMapping("/NovoValorServico")
     public ResponseEntity<ServicoResponseDTO> NovoValorServico(@RequestParam Long id,
                                                                @RequestParam Double novoValor)
-    {return service.NovoValorServico(id, novoValor);}
+    {return caseServicoPut.NovoValorServico(id, novoValor);}
 
     @Operation(summary = "Altera Informação do Registro na tabela", method = "PUT")
     @ApiResponses(value = {
@@ -99,7 +109,7 @@ public class ProdutoController {
     @PutMapping("/reajusteValorServico")
     public ResponseEntity<ServicoResponseDTO> reajusteValorServico(@RequestParam Long id,
                                                                    @RequestParam Double porcentagemReajuste)
-    {return  service.reajusteValorServico(id, porcentagemReajuste);}
+    {return  caseServicoPut.reajusteValorServico(id, porcentagemReajuste);}
 
     @Operation(summary = "Altera Informação do Registro na tabela", method = "PUT")
     @ApiResponses(value = {
@@ -111,7 +121,7 @@ public class ProdutoController {
     @PutMapping("/DescontoValorServico")
     public ResponseEntity<ServicoResponseDTO> DescontoValorServico(@RequestParam Long id,
                                                                    @RequestParam Double porcentagemDesconto)
-    { return  service.DescontoValorServico(id, porcentagemDesconto);}
+    { return  caseServicoPut.DescontoValorServico(id, porcentagemDesconto);}
 
     @Operation(summary = "Deleta Registro na tabela", method = "DELETE")
     @ApiResponses(value = {
@@ -122,5 +132,6 @@ public class ProdutoController {
     })
     @DeleteMapping("/deletaServico")
     public void deletaServico(@RequestParam Long id)
-    { service.deletaServico(id);}
+    { caseServicoDelete.deletaServico(id);}
+
 }

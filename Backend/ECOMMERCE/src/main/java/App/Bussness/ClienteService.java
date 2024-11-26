@@ -3,6 +3,8 @@ package App.Bussness;
 import App.Domain.Response.ClienteDTO;
 import App.Domain.Response.ClienteResponseDTO;
 import App.FeignClient.ClienteFeiginService;
+import App.Infra.Exceptions.IllegalActionException;
+import App.Infra.Exceptions.NullargumentsException;
 import App.Infra.Gateway.ClienteGateway;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +41,13 @@ public class ClienteService implements ClienteGateway {
     {
         try
         {
-            ClienteResponseDTO response = clienteFeiginService.BuscarClientesPorId(id);
-            return response;
+            if(id != null)
+            {
+                ClienteResponseDTO response = clienteFeiginService.BuscarClientesPorId(id);
+                return response;
+            }
+            else
+            {throw new NullargumentsException();}
         }
         catch (Exception e)
         {
@@ -55,8 +62,14 @@ public class ClienteService implements ClienteGateway {
     {
         try
         {
-            ClienteResponseDTO response = clienteFeiginService.AlterarScoreClientes(id, score);
-            return response;
+            if(score < 0){throw new IllegalActionException();}
+            if(id != null && score != null)
+            {
+                ClienteResponseDTO response = clienteFeiginService.AlterarScoreClientes(id, score);
+                return response;
+            }
+            else
+            {throw new NullargumentsException();}
         }
         catch (Exception e)
         {
@@ -70,7 +83,12 @@ public class ClienteService implements ClienteGateway {
     {
         try
         {
-            clienteFeiginService.DeletarClientesPorId(id);
+            if(id != null)
+            {
+                clienteFeiginService.DeletarClientesPorId(id);
+            }
+            else
+            {throw new NullargumentsException();}
         }
         catch (Exception e)
         {
@@ -95,8 +113,16 @@ public class ClienteService implements ClienteGateway {
     {
         try
         {
-            ClienteDTO response = clienteFeiginService.NovoCliente(nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);
-            return response;
+            if(score < 0) {throw new IllegalActionException();}
+            if(nome != null && sobrenome != null && dataNascimento != null && logradouro != null &&
+            numero != null && bairro != null && referencia != null && cep != null && prefixo != null &&
+            telefone != null && email != null && score != null)
+            {
+                ClienteDTO response = clienteFeiginService.NovoCliente(nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);
+                return response;
+            }
+            else
+            { throw  new NullargumentsException();}
         }
         catch (Exception e)
         {
@@ -122,8 +148,17 @@ public class ClienteService implements ClienteGateway {
     {
         try
         {
-            ClienteResponseDTO response = clienteFeiginService.EditarCliente(id, nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);
-            return response;
+            if(score < 0) {throw new IllegalActionException();}
+            if(id != null && nome != null && sobrenome != null && dataNascimento != null && logradouro != null &&
+                    numero != null && bairro != null && referencia != null && cep != null && prefixo != null &&
+                    telefone != null && email != null && score != null)
+            {
+                ClienteResponseDTO response = clienteFeiginService.EditarCliente(id, nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);
+                return response;
+            }
+            else
+            { throw  new NullargumentsException();}
+
         }
         catch (Exception e)
         {

@@ -1,9 +1,9 @@
 package App.Config;
 
 import App.Infra.Gateway.OrdemServicoGateway;
-import App.Infra.UseCase.UseCaseOrdemServicoGet;
-import App.Infra.UseCase.UseCaseOrdemServicoPost;
-import App.Infra.UseCase.UseCaseOrdemServicoPut;
+import App.Infra.UseCase.OrdemServico.UseCaseOrdemServicoGet;
+import App.Infra.UseCase.OrdemServico.UseCaseOrdemServicoPost;
+import App.Infra.UseCase.OrdemServico.UseCaseOrdemServicoPut;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
