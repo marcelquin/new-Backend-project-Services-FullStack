@@ -17,7 +17,8 @@ public record ClienteDTO(
         String  cep,
         String  cidade,
         String  estado,
-        String telefone,
+        Long prefixo,
+        Long telefone,
         String email,
         String score
 

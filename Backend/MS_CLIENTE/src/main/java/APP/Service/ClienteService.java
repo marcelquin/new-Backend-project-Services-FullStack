@@ -58,7 +58,8 @@ public class ClienteService {
                         entity.getEndereco().getCep(),
                         entity.getEndereco().getCidade(),
                         entity.getEndereco().getEstado(),
-                        "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
+                        entity.getContato().getPrefixo(),
+                        entity.getContato().getTelefone(),
                         entity.getContato().getEmail(),
                         NumberFormat.getCurrencyInstance(localBrasil).format(entity.getScore()));
                 response.add(dto);
@@ -91,7 +92,8 @@ public class ClienteService {
                         entity.getEndereco().getCep(),
                         entity.getEndereco().getCidade(),
                         entity.getEndereco().getEstado(),
-                        "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
+                        entity.getContato().getPrefixo(),
+                        entity.getContato().getTelefone(),
                         entity.getContato().getEmail(),
                         NumberFormat.getCurrencyInstance(localBrasil).format(entity.getScore()));
                 return new ResponseEntity<>(response,HttpStatus.OK);
@@ -166,8 +168,8 @@ public class ClienteService {
                                                     entity.getEndereco().getCep(),
                                                     entity.getEndereco().getCidade(),
                                                     entity.getEndereco().getEstado(),
-                                                    "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
-                                                    entity.getContato().getEmail(),
+                                                    entity.getContato().getPrefixo(),
+                                                    entity.getContato().getTelefone(),                                                    entity.getContato().getEmail(),
                                                     NumberFormat.getCurrencyInstance(localBrasil).format(entity.getScore()));
                 return new ResponseEntity<>(response,HttpStatus.OK);
             }
@@ -268,7 +270,8 @@ public class ClienteService {
                         entity.getEndereco().getCep(),
                         entity.getEndereco().getCidade(),
                         entity.getEndereco().getEstado(),
-                        "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
+                        entity.getContato().getPrefixo(),
+                        entity.getContato().getTelefone(),
                         entity.getContato().getEmail(),
                         NumberFormat.getCurrencyInstance(localBrasil).format(entity.getScore()));
                 return new ResponseEntity<>(response,HttpStatus.OK);
@@ -310,8 +313,8 @@ public class ClienteService {
                                                                     entity.getEndereco().getCep(),
                                                                     entity.getEndereco().getCidade(),
                                                                     entity.getEndereco().getEstado(),
-                                                                    "("+entity.getContato().getPrefixo()+") "+entity.getContato().getTelefone(),
-                                                                    entity.getContato().getEmail(),
+                                                                    entity.getContato().getPrefixo(),
+                                                                    entity.getContato().getTelefone(),                                                                    entity.getContato().getEmail(),
                                                                     NumberFormat.getCurrencyInstance(localBrasil).format(entity.getScore()));
                 return new ResponseEntity<>(response,HttpStatus.OK);
             }

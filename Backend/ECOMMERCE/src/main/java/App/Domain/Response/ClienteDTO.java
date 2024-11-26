@@ -1,10 +1,11 @@
-package APP.DTO;
+package App.Domain.Response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
-public record ClienteResponseDTO(
+public record ClienteDTO(
+        Long id,
         String nome,
         String sobrenome,
         @JsonFormat(pattern = "dd/MM/yyyy")
@@ -20,6 +21,5 @@ public record ClienteResponseDTO(
         Long telefone,
         String email,
         String score
-
 ) {
 }

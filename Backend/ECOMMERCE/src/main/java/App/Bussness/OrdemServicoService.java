@@ -3,6 +3,9 @@ package App.Bussness;
 import App.Domain.ItemOrdemServicosResponseDTO;
 import App.Domain.OrdemServicoResponseDTO;
 import App.Domain.OrdemServicoResponseFullDTO;
+
+import App.Domain.Response.ClienteResponseDTO;
+import App.FeignClient.ClienteFeiginService;
 import App.Infra.Exceptions.EntityNotFoundException;
 import App.Infra.Exceptions.IllegalActionException;
 import App.Infra.Exceptions.NullargumentsException;
@@ -30,14 +33,15 @@ public class OrdemServicoService implements OrdemServicoGateway {
 
     private final OrdemServicoRepository ordemServicoRepository;
     private final ItemOrdemServicoRepository itemOrdemServicoRepository;
-
     private final ContatoRepository contatoRepository;
+    private final ClienteFeiginService clienteFeiginService;
     Locale localBrasil = new Locale("pt", "BR");
 
-    public OrdemServicoService(OrdemServicoRepository ordemServicoRepository, ItemOrdemServicoRepository itemOrdemServicoRepository, ContatoRepository contatoRepository) {
+    public OrdemServicoService(OrdemServicoRepository ordemServicoRepository, ItemOrdemServicoRepository itemOrdemServicoRepository, ContatoRepository contatoRepository, ClienteFeiginService clienteFeiginService) {
         this.ordemServicoRepository = ordemServicoRepository;
         this.itemOrdemServicoRepository = itemOrdemServicoRepository;
         this.contatoRepository = contatoRepository;
+        this.clienteFeiginService = clienteFeiginService;
     }
 
     @Override
@@ -178,25 +182,30 @@ public class OrdemServicoService implements OrdemServicoGateway {
             if(telefone != null && prefixo != null && relato != null && email != null)
             {
                 OrdemServicoEntity entity = new OrdemServicoEntity();
+                ContatoEntity contato = new ContatoEntity();
                 int codigo = (int) (111111 + Math.random() * 999999);
                 entity.setDataCadastro(LocalDateTime.now());
                 entity.setCodigo("OS_"+codigo);
                 entity.setRelato(relato);
                 if(idCliente != null)
                 {
-                    entity.setCliente("teste");
+                    ClienteResponseDTO clienteDTO = clienteFeiginService.BuscarClientesPorId(idCliente);
+                    entity.setCliente(clienteDTO.nome());
+                    contato.setEmail(clienteDTO.email());
+                    contato.setPrefixo(clienteDTO.prefixo());
+                    contato.setTelefone(clienteDTO.telefone());
                 }
                 if(cliente != null)
                 {
-                    entity.setCliente(cliente);
+                    System.out.println(cliente);
+                    //entity.setCliente(cliente);
+                    /*contato.setEmail(email);
+                    contato.setPrefixo(prefixo);
+                    contato.setTelefone(telefone);*/
                 }
                 entity.setValorTotal(0.0);
                 entity.setStatusordemservico(STATUSORDEMSERVICO.AGUARDANDO);
                 entity.setTimeStamp(LocalDateTime.now());
-                ContatoEntity contato = new ContatoEntity();
-                contato.setEmail(email);
-                contato.setPrefixo(prefixo);
-                contato.setTelefone(telefone);
                 contato.setTimeStamp(LocalDateTime.now());
                 contatoRepository.save(contato);
                 entity.setContato(contato);

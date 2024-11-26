@@ -1,4 +1,4 @@
-package APP.DTO;
+package App.Domain.Response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

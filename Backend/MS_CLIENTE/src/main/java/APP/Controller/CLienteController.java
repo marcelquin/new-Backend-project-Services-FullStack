@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("ms_Cliente")
 @Tag(name = "Micro serviço Clientes",
         description = "Manipula informações relacionadas a entidade")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 public class CLienteController {
 
         private final ClienteService service;
