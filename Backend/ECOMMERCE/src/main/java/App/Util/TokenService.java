@@ -1,7 +1,7 @@
-package APP.Bussness.Util;
+package App.Util;
 
 
-import APP.Infra.Persistence.Entity.User;
+import App.Infra.Persistence.Entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -22,7 +22,7 @@ public class TokenService {
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-                    .withIssuer("ms_clienteauth-api")
+                    .withIssuer("auth-api")
                     .withSubject(user.getLogin())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);

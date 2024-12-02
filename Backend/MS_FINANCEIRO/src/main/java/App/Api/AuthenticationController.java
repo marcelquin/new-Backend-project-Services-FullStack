@@ -14,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("ms_produtoauth")
-@Tag(name = "Security ms_produto",
+@RequestMapping("ms_financeirooauth")
+@Tag(name = "Security ms_financeiro",
         description = "Gerencia informações referente a entidade")
 @CrossOrigin(origins = "*")
 public class AuthenticationController {

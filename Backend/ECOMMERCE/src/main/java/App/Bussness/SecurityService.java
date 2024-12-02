@@ -1,30 +1,38 @@
-package APP.Bussness;
+package App.Bussness;
 
-import APP.Domain.AuthenticationDTO;
-import APP.Domain.LoginResponseDTO;
-import APP.Domain.RegisterDTO;
-import APP.Infra.Gateway.AuthorizationGateway;
-import APP.Infra.Persistence.Entity.User;
-import APP.Infra.Persistence.Repository.UserRepository;
-import APP.Util.TokenService;
+
+import App.Domain.Response.AuthenticationDTO;
+import App.Domain.Response.LoginResponseDTO;
+import App.Domain.Response.RegisterDTO;
+import App.FeignClient.SecurityClienteFeiginService;
+import App.FeignClient.SecurityFinanceiroFeiginService;
+import App.FeignClient.SecurityServicoFeiginService;
+import App.Infra.Gateway.SecurityGateway;
+import App.Infra.Persistence.Entity.User;
+import App.Infra.Persistence.Repository.UserRepository;
+import App.Util.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.sound.midi.SysexMessage;
-
 @Service
-public class JWTService implements AuthorizationGateway {
+public class SecurityService implements SecurityGateway {
 
     private AuthenticationManager authenticationManager;
     private final UserRepository repository;
     private final TokenService tokenService;
+    private final SecurityClienteFeiginService securityClienteFeiginService;
+    private final SecurityServicoFeiginService securityServicoFeiginService;
+    private final SecurityFinanceiroFeiginService securityFinanceiroFeiginService;
 
-    public JWTService(UserRepository repository, TokenService tokenService) {
+    public SecurityService(UserRepository repository, TokenService tokenService, SecurityClienteFeiginService securityClienteFeiginService, SecurityServicoFeiginService securityServicoFeiginService, SecurityFinanceiroFeiginService securityFinanceiroFeiginService) {
         this.repository = repository;
         this.tokenService = tokenService;
+        this.securityClienteFeiginService = securityClienteFeiginService;
+        this.securityServicoFeiginService = securityServicoFeiginService;
+        this.securityFinanceiroFeiginService = securityFinanceiroFeiginService;
     }
 
     @Override
@@ -34,9 +42,7 @@ public class JWTService implements AuthorizationGateway {
         {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
-
             var token = tokenService.generateToken((User) auth.getPrincipal());
-            System.out.println(token);
             return ResponseEntity.ok(new LoginResponseDTO(token));
         }
         catch (Exception e)
@@ -52,11 +58,12 @@ public class JWTService implements AuthorizationGateway {
         try
         {
             if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
-
             String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
             User newUser = new User(data.login(), encryptedPassword, data.role());
             this.repository.save(newUser);
-
+            securityServicoFeiginService.register(data);
+            //securityClienteFeiginService.register(data);
+            //securityFinanceiroFeiginService.register(data);
             return ResponseEntity.ok().build();
         }
         catch (Exception e)
@@ -65,5 +72,6 @@ public class JWTService implements AuthorizationGateway {
         }
         return null;
     }
+
 
 }

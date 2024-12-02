@@ -1,7 +1,10 @@
 package App.Bussness;
 
+import App.Domain.Response.AuthenticationDTO;
+import App.Domain.Response.LoginResponseDTO;
 import App.Domain.Response.ServicoDTO;
 import App.Domain.Response.ServicoResponseDTO;
+import App.FeignClient.SecurityServicoFeiginService;
 import App.FeignClient.ServicoFeiginService;
 import App.Infra.Exceptions.IllegalActionException;
 import App.Infra.Exceptions.NullargumentsException;
@@ -17,18 +20,23 @@ public class ServicoService implements ServicoGateway {
 
 
     private final ServicoFeiginService service;
+    private final SecurityServicoFeiginService securityService;
 
-    public ServicoService(ServicoFeiginService service) {
+    public ServicoService(ServicoFeiginService service, SecurityServicoFeiginService securityService) {
         this.service = service;
+        this.securityService = securityService;
     }
 
     @Override
     public ResponseEntity<List<ServicoDTO>> ListarServicos()
     {
-        try
-        {
-            List<ServicoDTO> response = service.ListarServicos().getBody();
-            return new ResponseEntity<>(response,HttpStatus.OK);
+        try {
+            AuthenticationDTO dto = new AuthenticationDTO("teste", "teste");
+            if(securityService.login(dto).getStatusCode() == HttpStatus.OK)
+            {
+                List<ServicoDTO> response = service.ListarServicos().getBody();
+                return new ResponseEntity<>(response,HttpStatus.OK);
+            }
         }
         catch (Exception e)
         {

@@ -27,6 +27,7 @@ public class SecurityConfigurations {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
                 .csrf(csrf -> csrf.disable())
+                .cors((cors -> cors.disable()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
@@ -35,11 +36,11 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/**", "/api-api-docs/swagger-config","/api-api-docs", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/auth/**", "/api-api-docs/swagger-config","/api-api-docs", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/auth/**", "/api-api-docs/swagger-config","/api-api-docs", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/pacote/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/pacote/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/pacote/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/pacote/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/backup/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/pacote/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/pacote/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/pacote/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/pacote/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/backup/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
