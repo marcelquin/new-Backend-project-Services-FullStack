@@ -31,12 +31,8 @@ public class ServicoService implements ServicoGateway {
     public ResponseEntity<List<ServicoDTO>> ListarServicos()
     {
         try {
-            AuthenticationDTO dto = new AuthenticationDTO("teste", "teste");
-            if(securityService.login(dto).getStatusCode() == HttpStatus.OK)
-            {
-                List<ServicoDTO> response = service.ListarServicos().getBody();
-                return new ResponseEntity<>(response,HttpStatus.OK);
-            }
+            List<ServicoDTO> response = service.ListarServicos().getBody();
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }
         catch (Exception e)
         {
