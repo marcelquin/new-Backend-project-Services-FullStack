@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "servico-service", url = "http://localhost:8082/ms_Servico")
+@FeignClient(name = "servico-service", url = "http://localhost:8000/msservico/msservico")
 public interface ServicoFeiginService {
 
     @GetMapping("/ListarServicos")

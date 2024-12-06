@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@FeignClient(name = "cliente-service", url = "http://localhost:8081/ms_Cliente")
+@FeignClient(name = "cliente-service", url = "http://localhost:8000/mscliente/mscliente")
 public interface ClienteFeiginService {
 
     @GetMapping("/ListarClientes")

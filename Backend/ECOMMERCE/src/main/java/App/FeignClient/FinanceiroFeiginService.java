@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "financeiro-service", url = "http://localhost:8085/ms_financeiro")
+@FeignClient(name = "financeiro-service", url = "http://localhost:8000/msfinanceiro/msfinanceiro")
 public interface FinanceiroFeiginService {
 
     @GetMapping("/BuscarRelatorioDiario")

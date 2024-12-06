@@ -1,0 +1,73 @@
+.RetornoDuploForm
+{
+    width: 25%;
+    height: auto;
+}
+
+.RetornoDuploForm .formAcao
+{
+    width: 90%;
+    height: 500px;
+    margin: 5%;
+}
+
+.formSeletorBusca
+{
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+}
+
+.formAcao label
+{
+    font-size: 14px;
+    color: black;
+    font-style: oblique;
+}
+
+.formAcao input
+{
+    width: 150px;
+    height: 20px;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+.formAcao .btn
+{
+    width: 80px;
+    height: 20px;
+    border-radius: 25px;
+}
+
+
+.formAcao .pagamento
+{
+    width: 100%;
+    height: auto;
+}
+
+.pagamento fieldset  
+{
+    margin-bottom: 20px;
+}
+.pagamento input
+{
+    width: 150px;
+    height: 20px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.pagamento label
+{
+    margin-top: 20px;
+}
+
+.retornoInfo
+{
+    width: 75%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,24 @@
+.ndbodyFlex
+{
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.ndbodyFlex .ndBodyRetornoTabela
+{
+    width: 60%;
+    height: auto;
+}
+
+.ndbodyFlex .ndBodyRetornoInformacao
+{
+    width: 40%;
+    height: auto;
+}
+
+.blocoRetornoInfo
+{
+    width: 100%;
+    height: auto;
+}

@@ -3,50 +3,6 @@ services:
 
   #DATABASE
 
-  database:
-    image: 'postgres:17'
-    environment:
-      - 'POSTGRES_DB=database'
-      - 'POSTGRES_PASSWORD=mh8q23pr99'
-      - 'POSTGRES_USER=mhqa'
-    ports:
-      - 5436:5432
-    volumes:
-      - /app/database/database_cliente 
-
-  database_cliente:
-    image: 'postgres:17'
-    environment:
-      - 'POSTGRES_DB=DB_CLIENTE'
-      - 'POSTGRES_PASSWORD=mh8q23pr99'
-      - 'POSTGRES_USER=mhqa'
-    ports:
-      - 5432:5432
-    volumes:
-      - /app/database/database_cliente 
-
-  database_servico:
-    image: 'postgres:17'
-    environment:
-      - 'POSTGRES_DB=DB_SERVICO'
-      - 'POSTGRES_PASSWORD=mh8q23pr99'
-      - 'POSTGRES_USER=mhqa'
-    ports:
-      - 5433:5432
-    volumes:
-      - /app/database/database_servico
-
-  database_financeiro:
-    image: 'postgres:17'
-    environment:
-      - 'POSTGRES_DB=DB_FINANCEIRO'
-      - 'POSTGRES_PASSWORD=mh8q23pr99'
-      - 'POSTGRES_USER=mhqa'
-    ports:
-      - 5434:5432
-    volumes:
-      - /app/database/database_servico 
-
   database_ecomerce:
     image: 'postgres:17'
     environment:
@@ -54,25 +10,61 @@ services:
       - 'POSTGRES_PASSWORD=mh8q23pr99'
       - 'POSTGRES_USER=mhqa'
     ports:
-      - 5435:5432
+      - 5432:5432
     volumes:
       - /app/database/database_ecomerce
 
 
   #MICRO SERVICES
-      #?createDatabaseIfNotExist=true
+  
+  eureka:
+    build: /Backend/Eureka
+    ports:
+      - "8761:8761"
+    environment:
+      - spring.application.name=Eureka
+      - eureka.instance.hostname=eureka-server
+      - eureka.client.register-with-eureka=false
+      - eureka.client.fetch-registry=false   
+    #restart: on-failure
+    
+  gateway:
+    build: /Backend/Gateway
+    ports:
+      - 8000:8000
+    environment:
+      - spring.application.name=Gateway
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+      - eureka.client.register-with-eureka=true
+      - eureka.client.fetch-registry=true
+      - spring.cloud.gateway.discovery.locator.lower-case-service-id=true
+      - spring.cloud.gateway.discovery.locator.enabled=true  
+    depends_on:
+      - eureka
+      - api
+      - ms_cliente
+      - ms_servico
+      - ms_financeiro
+      - ms_pagamento
+    #drestart: on-failure
+
   ms_cliente:
     build: /backend/MS_CLIENTE
     ports:
       - 8081:8081
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_cliente:5432/DB_CLIENTE
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_ecomerce:5432/db_Ecommerce
       - SPRING_DATASOURCE_USERNAME=mhqa
       - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      #- api.security.token.secret=${JWT_SECRET:28764JY723ffZ}
+      - spring.application.name=mscliente
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+      - eureka.client.register-with-eureka=true
+      - eureka.client.fetch-registry=true
+      - eureka.instance.prefer-ip-address=true
+      - spring.main.web-application-type=reactive
     depends_on:
-      - database_cliente
+      - database_ecomerce
     #restart: on-failure
 
   ms_servico:
@@ -80,13 +72,18 @@ services:
     ports:
       - 8082:8082
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_servico:5432/DB_SERVICO
-      - SPRING_DATASOURCE_USERNAME=mhqa
-      - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      #- api.security.token.secret=${JWT_SECRET:28764JY723ffZ}
+     - SPRING_DATASOURCE_URL=jdbc:postgresql://database_ecomerce:5432/db_Ecommerce
+     - SPRING_DATASOURCE_USERNAME=mhqa
+     - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
+     - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+     - spring.application.name=msservico 
+     - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+     - eureka.client.register-with-eureka=true
+     - eureka.client.fetch-registry=true
+     - eureka.instance.prefer-ip-address=true
+     - spring.main.web-application-type=reactive
     depends_on:
-      - database_servico
+      - database_ecomerce
     #restart: on-failure
 
   ms_financeiro:
@@ -94,13 +91,17 @@ services:
     ports:
       - 8085:8085
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_financeiro:5432/DB_FINANCEIRO
-      - SPRING_DATASOURCE_USERNAME=mhqa
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_ecomerce:5432/db_Ecommerce
       - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    #  - api.security.token.secret=${JWT_SECRET:28764JY723ffZ}
+      - spring.application.name=msfinanceiro
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+      - eureka.client.register-with-eureka=true
+      - eureka.client.fetch-registry=true
+      - eureka.instance.prefer-ip-address=true
+      - spring.main.web-application-type=reactive
     depends_on:
-      - database_financeiro
+      - database_ecomerce
     #restart: on-failure
 
   ms_pagamento:
@@ -108,16 +109,41 @@ services:
     ports:
       - 8084:8084
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_financeiro:5432/DB_FINANCEIRO
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://datdatabase_ecomercea:5432/db_Ecommerce
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_ecomerce:5432/db_Ecommerce
       - SPRING_DATASOURCE_USERNAME=mhqa
       - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    #  - api.security.token.secret=${JWT_SECRET:28764JY723ffZ}
+      - spring.application.name=mspagamento
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka
+      - eureka.client.register-with-eureka=true
+      - eureka.client.fetch-registry=true
+      - eureka.instance.prefer-ip-address=true
+      - spring.main.web-application-type=reactive
     depends_on:
-      - database_financeiro
+      - database_ecomerce
       - ms_financeiro
     #restart: on-failure
 
+  #API
+  api:
+    build: /backend/ECOMMERCE
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database_ecomerce:5432/db_Ecommerce
+      - SPRING_DATASOURCE_USERNAME=mhqa
+      - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - spring.application.name=mhqaservice
+      - eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka/
+      - eureka.client.register-with-eureka=true
+      - eureka.client.fetch-registry=true
+      - eureka.instance.prefer-ip-address=true
+      - spring.main.web-application-type=reactive
+    depends_on:
+      - database_ecomerce
+    #restart: on-failure
 
 
   #frontend:

@@ -1,0 +1,36 @@
+.ndBackground
+{
+    width: 100%;
+    height: auto;
+}
+
+.ndBackground .ndHeader
+{
+    width: 100%;
+    height: auto;
+
+}
+
+.ndBackground .ndbody
+{
+    width: 100%;
+    height: auto;
+}
+
+.ndbody .blocoAdicional
+{
+    width: 100%;
+    height: 50px;    
+}
+
+.ndbody .blocoTabela
+{
+    width: 100%;
+    height: auto;    
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px)
+{   
+
+
+}

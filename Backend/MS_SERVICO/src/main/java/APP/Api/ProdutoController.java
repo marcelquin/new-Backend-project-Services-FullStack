@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("ms_Servico")
+@RequestMapping("msServico")
 @Tag(name = "msProduto",
         description = "Gerencia informações referente a entidade")
 @CrossOrigin(origins = "*")

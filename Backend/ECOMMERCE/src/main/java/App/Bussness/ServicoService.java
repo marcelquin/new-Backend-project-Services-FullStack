@@ -1,10 +1,8 @@
 package App.Bussness;
 
-import App.Domain.Response.AuthenticationDTO;
-import App.Domain.Response.LoginResponseDTO;
+
 import App.Domain.Response.ServicoDTO;
 import App.Domain.Response.ServicoResponseDTO;
-import App.FeignClient.SecurityServicoFeiginService;
 import App.FeignClient.ServicoFeiginService;
 import App.Infra.Exceptions.IllegalActionException;
 import App.Infra.Exceptions.NullargumentsException;
@@ -20,11 +18,10 @@ public class ServicoService implements ServicoGateway {
 
 
     private final ServicoFeiginService service;
-    private final SecurityServicoFeiginService securityService;
 
-    public ServicoService(ServicoFeiginService service, SecurityServicoFeiginService securityService) {
+
+    public ServicoService(ServicoFeiginService service) {
         this.service = service;
-        this.securityService = securityService;
     }
 
     @Override
