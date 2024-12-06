@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+
+ 
+      - name: docker login
+        uses: docker/login-action@v3.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      
+      - name: Build and push
+        uses: docker/build-push-action@v5.2.0
+        with:   
+          context: ./Backend/MS_CLIENTE
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/mhqaservicemscliente:latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v5.2.0
+        with:   
+          context: ./Backend/MS_SERVICO
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/mhqaservicemsservico:latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v5.2.0
+        with:   
+          context: ./Backend/MS_FINANCEIRO
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/mhqaservicemsfinanceiro:latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v5.2.0
+        with:   
+          context: ./Backend/MS_PAGAMENTO
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/mhqaservicemspagamento:latest
+
+
+      - name: Build and push
+        uses: docker/build-push-action@v5.2.0
+        with:   
+          context: ./Backend/Eureka
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/mhqaserviceurekaserver:latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v5.2.0
+        with:   
+          context: ./Backend/Gateway
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/mhqaservicegateway:latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v5.2.0
+        with:   
+          context: ./Backend/ECOMMERCE
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USER }}/mhqaserviceapi:latest
+
+     # - name: Build and push
+     #   uses: docker/build-push-action@v5.2.0
+     #   with:   
+     #     context: ./frontend
+     #     push: true
+     #     tags: ${{ secrets.DOCKERHUB_USER }}/mhqaservicefrontend:latest
