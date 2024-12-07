@@ -4,7 +4,8 @@ import App.Domain.ItemOrdemServicosResponseDTO;
 import App.Domain.OrdemServicoResponseDTO;
 import App.Domain.OrdemServicoResponseFullDTO;
 
-import App.Domain.Response.ClienteResponseDTO;
+
+import App.Domain.MsServicesDTO.ClienteResponseDTO;
 import App.FeignClient.ClienteFeiginService;
 import App.Infra.Exceptions.EntityNotFoundException;
 import App.Infra.Exceptions.IllegalActionException;
@@ -313,6 +314,9 @@ public class OrdemServicoService implements OrdemServicoGateway {
                     entity.setTimeStamp(LocalDateTime.now());
                     entity.setDataConclusao(LocalDateTime.now());
                     ordemServicoRepository.save(entity);
+                    //chamada financeiro-service
+
+                    //
                     List<ItemOrdemServicosResponseDTO> dtos = new ArrayList<>();
                     for(ItemOrdemServicoEntity itemOrdem : entity.getItems())
                     {

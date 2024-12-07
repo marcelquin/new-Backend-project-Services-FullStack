@@ -9,7 +9,7 @@ import Axios from 'axios';
 function Servico() {
 
   //const baseUrl = "http://34.135.105.123:8080"
-  const baseUrl = "http://localhost:8080"
+  const baseUrl = "http://localhost:8000/msservico/msservico"
   const[APIData, setAPIData]= useState([]);
   const[dadoPesquisa, setdadoPesquisa]= useState([]);
   const pesquisa = dadoPesquisa.length > 0 ?
@@ -18,7 +18,7 @@ function Servico() {
 
   useEffect(() => {
     Axios
-      .get(`${baseUrl}/servico/ListarServicos`)
+      .get(`${baseUrl}/ListarServicos`)
       .then((response) => { setAPIData(response.data)}) 
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);

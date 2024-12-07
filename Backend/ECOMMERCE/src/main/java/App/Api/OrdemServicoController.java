@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("ordem_servico")
-@Tag(name = "ordem_servico",
+@RequestMapping("ecommerce")
+@Tag(name = "ecommerce",
         description = "Manipula dados referente a entidade"
 )
 public class OrdemServicoController {

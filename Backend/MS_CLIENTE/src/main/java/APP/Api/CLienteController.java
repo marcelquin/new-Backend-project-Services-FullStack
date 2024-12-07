@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("mscliente")
+@RequestMapping("clientems")
 @Tag(name = "Micro serviço Clientes",
         description = "Manipula informações relacionadas a entidade")
 @CrossOrigin(origins = "*")

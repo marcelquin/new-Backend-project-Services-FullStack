@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AdmServicoCad()
 {
   //const baseUrl = "http://34.135.105.123:8080"
-  const baseUrl = "http://localhost:8080"
+  const baseUrl = "http://localhost:8000/msservico/msservico"
     const navigate = useNavigate();
     const[dataPost, setDataPost]=useState({
       nome: "",
@@ -16,7 +16,7 @@ export default function AdmServicoCad()
       valor: "",
       maoDeObra: 0
     })
-
+    
 
     const handleChanage = (e) => {
       setDataPost(prev=>({...prev,[e.target.name]:e.target.value}));
@@ -24,7 +24,7 @@ export default function AdmServicoCad()
 
     const handleClick=async (e)=>{
       try{
-        fetch(`${baseUrl}/servico/NovoServico`, {
+        fetch(`${baseUrl}/NovoServico`, {
           method: 'POST',
           headers:{
             'Content-Type': 'application/x-www-form-urlencoded'

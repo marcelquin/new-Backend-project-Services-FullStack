@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("msfinanceiro")
+@RequestMapping("financeiroms")
 @Tag(name = "Relatorios Financeiros",
         description = "Manipula informações referentes a entidade"
 )
@@ -36,6 +36,13 @@ public class relatoriosController {
         this.caseFinanceiroPost = caseFinanceiroPost;
         this.caseFinanceiroPut = caseFinanceiroPut;
     }
+
+
+/*    @GetMapping("/teste")
+    public String teste()
+    {
+        return "teste aqui";
+    }*/
 
     @Operation(summary = "Busca Registro na tabela", method = "GET")
     @ApiResponses(value = {

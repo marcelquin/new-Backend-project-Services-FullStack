@@ -22,8 +22,8 @@ services:
     ports:
       - "8761:8761"
     environment:
-      - spring.application.name=Eureka
-      - eureka.instance.hostname=eureka-server
+      - spring.application.name=eureka
+      - eureka.instance.hostname=eureka
       - eureka.client.register-with-eureka=false
       - eureka.client.fetch-registry=false   
     #restart: on-failure

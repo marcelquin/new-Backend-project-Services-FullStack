@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mspagamento")
+@RequestMapping("/pagamentoms")
 @Tag(name = "Micro serviço pagamento",
         description = "Responsavel por efetuar, salvar e retornar informação sobre o pagamento"
 )
@@ -29,6 +29,12 @@ public class PagamentoController {
         this.casePagamentoGet = casePagamentoGet;
         this.casePagamentoPost = casePagamentoPost;
     }
+
+/*    @GetMapping("/teste")
+    public String teste()
+    {
+        return "teste aqui";
+    }*/
 
     @Operation(summary = "Lista Registros da tabela", method = "GET")
     @ApiResponses(value = {

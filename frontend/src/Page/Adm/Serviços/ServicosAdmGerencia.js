@@ -11,7 +11,7 @@ export default function AdmServicoGerencia()
 
 
   //const baseUrl = "http://34.135.105.123:8080"
-  const baseUrl = "http://localhost:8080"
+  const baseUrl = "http://localhost:8000/msservico/msservico"
   const[APIData, setAPIData]= useState([]);
   const navegate = useNavigate()
   const[dadoPesquisa, setdadoPesquisa] = useState('')
@@ -30,7 +30,7 @@ export default function AdmServicoGerencia()
 
   useEffect(() => {
     Axios
-      .get(`${baseUrl}/servico/ListarServicos`)
+      .get(`${baseUrl}/ListarServicos`)
       .then((response) => { setAPIData(response.data)}) 
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
@@ -38,7 +38,7 @@ export default function AdmServicoGerencia()
   }, []);
 
   useEffect(()=>{
-    fetch(`${baseUrl}/servico/BuscarServicoPorId?id=${id}`,
+    fetch(`${baseUrl}/BuscarServicoPorId?id=${id}`,
         {
             method:'GET',
             headers:{
@@ -58,7 +58,7 @@ export default function AdmServicoGerencia()
 
   const handleClick=async (e)=>{
     try{
-      fetch(`${baseUrl}/servico/EditarServico`, {
+      fetch(`${baseUrl}/EditarServico`, {
         method: 'PUT',
         headers:{
           'Content-Type': 'application/x-www-form-urlencoded'

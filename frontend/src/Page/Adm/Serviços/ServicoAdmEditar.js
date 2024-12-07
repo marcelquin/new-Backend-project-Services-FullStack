@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 export default function AdmServicoEditar()
 {
   //const baseUrl = "http://34.135.105.123:8080"
-  const baseUrl = "http://localhost:8080"
+  const baseUrl = "http://localhost:8000/msservico/msservico"
     const navigate = useNavigate();
     const {id} = useParams()
     const[dataPost, setDataPost]=useState({
@@ -18,7 +18,7 @@ export default function AdmServicoEditar()
     })
 
     useEffect(()=>{
-      fetch(`${baseUrl}/servico/BuscarServicoPorId?id=${id}`,
+      fetch(`${baseUrl}/BuscarServicoPorId?id=${id}`,
           {
               method:'GET',
               headers:{
@@ -38,7 +38,7 @@ export default function AdmServicoEditar()
 
     const handleClick=async (e)=>{
       try{
-        fetch(`${baseUrl}/servico/EditarServico`, {
+        fetch(`${baseUrl}/EditarServico`, {
           method: 'PUT',
           headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
