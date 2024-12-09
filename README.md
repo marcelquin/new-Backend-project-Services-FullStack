@@ -1,6 +1,24 @@
 PROJETO
 
-  Com função de adicionar melhorias em projeto existente presente no link: https://github.com/marcelquin/mhqa_servicos, para fins de demonstrativo de conhecimento, visando também a melhoria de desempenho para uma escala de uso maior.
+  Inspirado no projeto existente presente no link: https://github.com/marcelquin/mhqa_servicos, para fins de demonstrativo de conhecimento, visando também a melhoria de desempenho, melhor manutenção e ampliação do mesmo, adicionando ferramentas e metodologias novas ao projeto como micro serviço, eureka gateway, swagger, dentre outros.
+
+MICRO SERVIÇOS
+
+  Microsserviços é uma abordagem de desenvolvimento de software que consiste em dividir uma aplicação em pequenos serviços independentes que se comunicam por APIs, facilitando manutenção, melhorias e atualizações, podendo ou não ser direcionadas a um banco de dados individual.
+
+SWAGGER
+  Swagger é uma especificação aberta e um conjunto de ferramentas que permite a documentação e o desenvolvimento de APIs (Application Programming Interface), possibilitando testes facilitados, e melhor entendimento do sistema.
+
+EUREKA GATEWAY
+  Eureka e Gateway são ferramentas com funções diferentes em uma arquitetura de microsserviços: 
+Eureka
+  É um serviço de descoberta que funciona como um catálogo de todos os serviços disponíveis em um sistema. Quando um microsserviço é iniciado, ele se registra no Eureka, informando sua localização e outros metadados. 
+Gateway
+  É um sistema ou equipamento que estabelece a comunicação entre múltiplos ambientes. Ele pode ser usado para agregar APIs de múltiplos serviços, mas também agir como um “porteiro”, controlando o acesso aos recursos. 
+O Eureka é uma ferramenta desenvolvida pela Netflix para seu framework Spring Cloud Netflix. O Zuul é um API Gateway que usa o Eureka para redirecionar as requisições para os serviços.
+  Unificando e ocultando a porta original do micro serviço chamada, se atualizando automaticamente as atualizações e manutenções de seus serviços.
+
+
 
 DOCUMENTAÇÃO
 
