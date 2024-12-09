@@ -14,10 +14,10 @@ EUREKA GATEWAY
 
   Eureka e Gateway são ferramentas com funções diferentes em uma arquitetura de microsserviços: 
   
-Eureka
+Eureka:
   É um serviço de descoberta que funciona como um catálogo de todos os serviços disponíveis em um sistema. Quando um microsserviço é iniciado, ele se registra no Eureka, informando sua localização e outros metadados. 
   
-Gateway
+Gateway:
   É um sistema ou equipamento que estabelece a comunicação entre múltiplos ambientes. Ele pode ser usado para agregar APIs de múltiplos serviços, mas também agir como um “porteiro”, controlando o acesso aos recursos. 
   
 O Eureka é uma ferramenta desenvolvida pela Netflix para seu framework Spring Cloud Netflix. O Zuul é um API Gateway que usa o Eureka para redirecionar as requisições para os serviços.
@@ -27,11 +27,11 @@ O Eureka é uma ferramenta desenvolvida pela Netflix para seu framework Spring C
 
 DOCUMENTAÇÃO
 
-  Esta presente na pasta Doc os diagramas de funcionamento e entidades, para fins de entendimento e guia do proprio desenvolvimento do projeto, podendo ser ampliado ou alterado durante a execução do projeto
+  Esta presente na pasta Doc os diagramas de funcionamento e entidades, para fins de entendimento e guia do proprio desenvolvimento do projeto, podendo ser ampliado ou alterado durante a execução do projeto.
 
-MICRO SERVIÇOS
+FLUXO DE MICRO SERVIÇOS DO PROJETO
 
-  Sistemas separados sendo chamados dinamicamente pelo fluxo principal, sendo roteada pelo gateway recebendo e enviando informações, deixando a conexão desacoplada, mais leve e fluida, para um melhor desempenho, manutenção e melhorias.
+    Usando o gateway para direcionamento de rotas, assim como esta descrito na documentação graficamente, a portas originais são ocultadas e centralizadas pelo eureka gateway, assim sendo cada fluxo possui suas particularidades, podendo ou não ser chamada por outra parte do sistema para executar uma função conforme necessidade.
 
 MS_CLIENTE
 
@@ -50,4 +50,7 @@ MS_PAGAMENTO
 
   Responsável por gerir, confirmar, ou negar pagamento, simulando uma api externa de autorização de transação financeira, Retornando ao ms_financeiro a que por sua vez salva a informação para geração do relatório financeiro.
 
+ECOMMERCE
+
+  Originalmente o fluxo de dados principal, sendo separado nos serviços cada um com sua responsabilidade gerenciando suas próprias informações, atualmente este módulo digamos assim cuida somente do inicio da abertura da ordem de serviço podendo ou não buscar os dados no micro serviço cliente, buscando e retornando informações do micro serviço de serviços e seguindo seu fluxo até o fim e conclusão da ordem de serviço. Tendo somente esta única responsabilidade, chamando eventualmente os serviços conforme necessidade do processo.
   
