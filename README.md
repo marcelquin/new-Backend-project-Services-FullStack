@@ -13,11 +13,15 @@ SWAGGER
 EUREKA GATEWAY
 
   Eureka e Gateway são ferramentas com funções diferentes em uma arquitetura de microsserviços: 
+  
 Eureka
   É um serviço de descoberta que funciona como um catálogo de todos os serviços disponíveis em um sistema. Quando um microsserviço é iniciado, ele se registra no Eureka, informando sua localização e outros metadados. 
+  
 Gateway
   É um sistema ou equipamento que estabelece a comunicação entre múltiplos ambientes. Ele pode ser usado para agregar APIs de múltiplos serviços, mas também agir como um “porteiro”, controlando o acesso aos recursos. 
+  
 O Eureka é uma ferramenta desenvolvida pela Netflix para seu framework Spring Cloud Netflix. O Zuul é um API Gateway que usa o Eureka para redirecionar as requisições para os serviços.
+
   Unificando e ocultando a porta original do micro serviço chamada, se atualizando automaticamente as atualizações e manutenções de seus serviços.
 
 
