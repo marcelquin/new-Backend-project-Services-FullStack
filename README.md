@@ -33,24 +33,56 @@ FLUXO DE MICRO SERVIÇOS DO PROJETO
 
     Usando o gateway para direcionamento de rotas, assim como esta descrito na documentação graficamente, a portas originais são ocultadas e centralizadas pelo eureka gateway, assim sendo cada fluxo possui suas particularidades, podendo ou não ser chamada por outra parte do sistema para executar uma função conforme necessidade.
 
+    como o gateway faz o roteamento das requisições o link de conexão se torna um pouco diferenciado de uso, http://localhost:8000/(spring.application.name)//(RequestMapping)
+
 MS_CLIENTE
 
-  Responsável pelo cadastro e manutenção das informações referentes a clientes, sendo chamado dinamicamente pelo fluxo de dados principal quando há necessidade de buscar, inserir, alterar ou deletar uma informação
+  Responsável pelo cadastro e manutenção das informações referentes a clientes, sendo chamado dinamicamente pelo fluxo de dados principal quando há necessidade de buscar, inserir, alterar ou deletar uma informação.
+
+  spring.application.name: cliente
+  Request Mapping: clientems
+  Link gateway: http://localhost:8000/cliente/clientems/
 
 MS_SERVICO
 
   Responsável pelo cadastro e manutenção das informações referente a serviços presentes no sistema, assim como os demais micro serviços sendo chamados dinamicamente, sendo salvo somente as informações necessárias no fluxo principal no processo de criação e gerencia das informações da ordem de serviço
+
+  spring.application.name: servico
+  Request Mapping: servicoms
+  Link gateway: http://localhost:8000/servico/servicoms/
 
 MS_FINANCEIRO
 
   Responsável pela capitação de informação de forma dinâmica, monitorando valores, pagamentos e gerando relatórios financeiros a fim de mostrar uma visão da saúde financeira, em relatório de débitos e vendas realizadas, dando uma visão geral do dia, mês ou ano.
   Funciona de certo modo como um sistema de backup de informação, tendo em vista que o fluxo principal também salva no seu banco de dados porem sem informações adicionais.
 
+  spring.application.name: financeiro
+  Request Mapping: financeiroms
+  Link gateway: http://localhost:8000/financeiro/financeiroms/
+
 MS_PAGAMENTO
 
   Responsável por gerir, confirmar, ou negar pagamento, simulando uma api externa de autorização de transação financeira, Retornando ao ms_financeiro a que por sua vez salva a informação para geração do relatório financeiro.
 
+  spring.application.name: pagamento
+  Request Mapping: pagamentoms
+  Link gateway: http://localhost:8000/pagamento/pagamentoms/
+
+MS_AUTHENTICATION
+
+  Responsavel pela verificação se o usuario esta cadastrado ou não no sistema retornando o token caso o mesmo exista. Ultulizando JWT security como autenticação, e manutenção das entradas que requer que o usuário seja cadastrado para realizar a requizição.
+
+  spring.application.name: auth
+  Request Mapping: auth
+  Link gateway: http://localhost:8000/auth/auth/
+  
+
 ECOMMERCE
 
   Originalmente o fluxo de dados principal, sendo separado nos serviços cada um com sua responsabilidade gerenciando suas próprias informações, atualmente este módulo digamos assim cuida somente do inicio da abertura da ordem de serviço podendo ou não buscar os dados no micro serviço cliente, buscando e retornando informações do micro serviço de serviços e seguindo seu fluxo até o fim e conclusão da ordem de serviço. Tendo somente esta única responsabilidade, chamando eventualmente os serviços conforme necessidade do processo.
+
+  spring.application.name: ecommerce
+  Request Mapping: ecommerce
+  Link gateway: http://localhost:8000/ecommerce/ecommerce/	
+
   
