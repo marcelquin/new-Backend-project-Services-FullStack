@@ -31,9 +31,7 @@ DOCUMENTAÇÃO
 
 FLUXO DE MICRO SERVIÇOS DO PROJETO
 
-    Usando o gateway para direcionamento de rotas, assim como esta descrito na documentação graficamente, a portas originais são ocultadas e centralizadas pelo eureka gateway, assim sendo cada fluxo possui suas particularidades, podendo ou não ser chamada por outra parte do sistema para executar uma função conforme necessidade.
-
-    como o gateway faz o roteamento das requisições o link de conexão se torna um pouco diferenciado de uso, http://localhost:8000/(spring.application.name)//(RequestMapping)
+  Usando o gateway para direcionamento de rotas, assim como esta descrito na documentação graficamente, a portas originais são ocultadas e centralizadas pelo eureka gateway, assim sendo cada fluxo possui suas particularidades, podendo ou não ser chamada por outra parte do sistema para executar uma função conforme necessidade.
 
 MS_CLIENTE
 
