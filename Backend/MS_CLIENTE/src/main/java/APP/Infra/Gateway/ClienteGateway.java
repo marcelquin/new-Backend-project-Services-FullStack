@@ -14,6 +14,7 @@ public interface ClienteGateway {
     public ResponseEntity<ClienteResponseDTO> BuscarClientesPorId(@RequestParam Long id);
     public ResponseEntity<ClienteDTO> NovoCliente(@RequestParam String nome,
                                                   @RequestParam String sobrenome,
+                                                  @RequestParam Long cpf,
                                                   @RequestParam LocalDate dataNascimento,
                                                   String logradouro,
                                                   @RequestParam String numero,
@@ -27,6 +28,7 @@ public interface ClienteGateway {
     public ResponseEntity<ClienteResponseDTO> EditarCliente(@RequestParam Long id,
                                                             @RequestParam String nome,
                                                             @RequestParam String sobrenome,
+                                                            @RequestParam Long cpf,
                                                             @RequestParam LocalDate dataNascimento,
                                                             String logradouro,
                                                             @RequestParam String numero,

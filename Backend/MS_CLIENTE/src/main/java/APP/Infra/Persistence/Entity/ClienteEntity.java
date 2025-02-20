@@ -26,6 +26,9 @@ public class ClienteEntity {
 
     private String sobrenome;
 
+    @JoinColumn(unique = true)
+    private Long docuemnto;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 

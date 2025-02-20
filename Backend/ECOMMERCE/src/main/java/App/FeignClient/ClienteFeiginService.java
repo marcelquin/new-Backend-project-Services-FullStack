@@ -2,9 +2,10 @@ package App.FeignClient;
 
 
 
-import App.Domain.MsServicesDTO.ClienteDTO;
-import App.Domain.MsServicesDTO.ClienteResponseDTO;
+
+import App.Domain.Response.ClienteResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ClienteFeiginService {
 
     @GetMapping("/BuscarClientesPorId")
-    public ClienteResponseDTO BuscarClientesPorId(@RequestParam Long id);
+    public ResponseEntity<ClienteResponseDTO> BuscarClientesPorId(@RequestParam Long id);
 
 
 }

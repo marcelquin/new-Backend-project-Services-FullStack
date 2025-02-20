@@ -18,6 +18,7 @@ public class UseCaseClientePut {
     public ResponseEntity<ClienteResponseDTO> EditarCliente(@RequestParam Long id,
                                                             @RequestParam String nome,
                                                             @RequestParam String sobrenome,
+                                                            @RequestParam Long cpf,
                                                             @RequestParam LocalDate dataNascimento,
                                                             String logradouro,
                                                             @RequestParam String numero,
@@ -28,7 +29,7 @@ public class UseCaseClientePut {
                                                             @RequestParam Long telefone,
                                                             @RequestParam String email,
                                                             Double score)
-    {return clienteGateway.EditarCliente(id, nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
+    {return clienteGateway.EditarCliente(id, nome, sobrenome,cpf, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
     public ResponseEntity<ClienteResponseDTO> AlterarScoreClientes(@RequestParam Long id,
                                                                    @RequestParam Double score)
     {return clienteGateway.AlterarScoreClientes(id, score);}

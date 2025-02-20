@@ -1,23 +1,17 @@
 package App.Infra.UseCase.OrdemServico;
 
-import App.Domain.OrdemServicoResponseDTO;
-import App.Infra.Gateway.OrdemServicoGateway;
+import App.Domain.Response.VendaResponseDTO;
+import App.Infra.Gateway.VendaGateway;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 
 public class UseCaseOrdemServicoPost {
 
-    private final OrdemServicoGateway ordemServicoGateway;
+    private final VendaGateway vendaGateway;
 
-    public UseCaseOrdemServicoPost(OrdemServicoGateway ordemServicoGateway) {
-        this.ordemServicoGateway = ordemServicoGateway;
+    public UseCaseOrdemServicoPost(VendaGateway vendaGateway) {
+        this.vendaGateway = vendaGateway;
     }
 
-    public ResponseEntity<OrdemServicoResponseDTO> NovaOrdemServico(Long idCliente,
-                                                                    String cliente,
-                                                                    @RequestParam Long prefixo,
-                                                                    @RequestParam Long telefone,
-                                                                    String email,
-                                                                    @RequestParam String relato)
-    {return ordemServicoGateway.NovaOrdemServico(idCliente, cliente, prefixo, telefone, email, relato);}
+    public ResponseEntity<VendaResponseDTO> NovaVenda()
+    {return vendaGateway.NovaVenda();}
 }

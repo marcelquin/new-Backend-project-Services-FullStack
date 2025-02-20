@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public record ClienteResponseDTO(
         String nome,
         String sobrenome,
+        Long cpf,
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate dataNascimento,
         String logradouro,

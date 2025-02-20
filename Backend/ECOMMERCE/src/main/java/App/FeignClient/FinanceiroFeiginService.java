@@ -1,7 +1,8 @@
 package App.FeignClient;
 
 
-import App.Domain.MsServicesDTO.VendaRequestFinalziadaDTO;
+
+import App.Domain.Response.VendaRequestFinalziadaDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

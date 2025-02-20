@@ -69,6 +69,7 @@ public class CLienteController {
         @PostMapping("/NovoCliente")
         public ResponseEntity<ClienteDTO> NovoCliente(@RequestParam String nome,
                                                       @RequestParam String sobrenome,
+                                                      @RequestParam Long cpf,
                                                       @RequestParam LocalDate dataNascimento,
                                                       String logradouro,
                                                       @RequestParam String numero,
@@ -79,7 +80,7 @@ public class CLienteController {
                                                       @RequestParam Long telefone,
                                                       @RequestParam String email,
                                                       Double score)
-        {return caseClientePost.NovoCliente(nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
+        {return caseClientePost.NovoCliente(nome, sobrenome,cpf,dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
 
         @Operation(summary = "Edita Registro na tabela", method = "PUT")
         @ApiResponses(value = {
@@ -92,6 +93,7 @@ public class CLienteController {
         public ResponseEntity<ClienteResponseDTO> EditarCliente(@RequestParam Long id,
                                                                 @RequestParam String nome,
                                                                 @RequestParam String sobrenome,
+                                                                @RequestParam Long cpf,
                                                                 @RequestParam LocalDate dataNascimento,
                                                                 String logradouro,
                                                                 @RequestParam String numero,
@@ -102,7 +104,7 @@ public class CLienteController {
                                                                 @RequestParam Long telefone,
                                                                 @RequestParam String email,
                                                                 Double score)
-        {return caseClientePut.EditarCliente(id, nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
+        {return caseClientePut.EditarCliente(id, nome, sobrenome,cpf, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
 
 
         @Operation(summary = "Edita Registro na tabela", method = "PUT")

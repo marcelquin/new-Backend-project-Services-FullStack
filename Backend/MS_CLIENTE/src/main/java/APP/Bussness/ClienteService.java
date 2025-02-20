@@ -87,6 +87,7 @@ public class ClienteService implements ClienteGateway {
                 );
                 ClienteResponseDTO response = new ClienteResponseDTO(entity.getNome(),
                         entity.getSobrenome(),
+                        entity.getDocuemnto(),
                         entity.getDataNascimento(),
                         entity.getEndereco().getLogradouro(),
                         entity.getEndereco().getNumero(),
@@ -112,6 +113,7 @@ public class ClienteService implements ClienteGateway {
     @Override
     public ResponseEntity<ClienteDTO> NovoCliente(String nome,
                                                           String sobrenome,
+                                                          Long cpf,
                                                           LocalDate dataNascimento,
                                                           String logradouro,
                                                           String numero,
@@ -153,6 +155,7 @@ public class ClienteService implements ClienteGateway {
                 contato.setTimeStamp(LocalDateTime.now());
                 entity.setNome(nome);
                 entity.setSobrenome(sobrenome);
+                entity.setDocuemnto(cpf);
                 entity.setDataNascimento(dataNascimento);
                 if(score != null){entity.setScore(score);}
                 entity.setTimeStamp(LocalDateTime.now());
@@ -208,6 +211,7 @@ public class ClienteService implements ClienteGateway {
     public ResponseEntity<ClienteResponseDTO> EditarCliente(Long id,
                                                             String nome,
                                                             String sobrenome,
+                                                            Long cpf,
                                                             LocalDate dataNascimento,
                                                             String logradouro,
                                                             String numero,
@@ -243,6 +247,7 @@ public class ClienteService implements ClienteGateway {
                 );
                 entity.setNome(nome);
                 entity.setSobrenome(sobrenome);
+                entity.setDocuemnto(cpf);
                 entity.setDataNascimento(dataNascimento);
                 if(score != null){entity.setScore(score);}
                 RestTemplate restTemplate = new RestTemplate();
@@ -268,6 +273,7 @@ public class ClienteService implements ClienteGateway {
                 clienteRepository.save(entity);
                 ClienteResponseDTO response = new ClienteResponseDTO(entity.getNome(),
                         entity.getSobrenome(),
+                        entity.getDocuemnto(),
                         entity.getDataNascimento(),
                         entity.getEndereco().getLogradouro(),
                         entity.getEndereco().getNumero(),
@@ -312,6 +318,7 @@ public class ClienteService implements ClienteGateway {
                 clienteRepository.save(entity);
                 ClienteResponseDTO response = new ClienteResponseDTO(entity.getNome(),
                                                                     entity.getSobrenome(),
+                                                                    entity.getDocuemnto(),
                                                                     entity.getDataNascimento(),
                                                                     entity.getEndereco().getLogradouro(),
                                                                     entity.getEndereco().getNumero(),

@@ -1,7 +1,7 @@
 package App.Infra.UseCase.OrdemServico;
 
-import App.Domain.OrdemServicoResponseFullDTO;
-import App.Infra.Gateway.OrdemServicoGateway;
+import App.Domain.Response.CupomFiscal;
+import App.Infra.Gateway.VendaGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -9,18 +9,18 @@ import java.util.List;
 
 public class UseCaseOrdemServicoGet {
 
-    private final OrdemServicoGateway ordemServicoGateway;
+    private final VendaGateway vendaGateway;
 
 
-    public UseCaseOrdemServicoGet(OrdemServicoGateway ordemServicoGateway) {
-        this.ordemServicoGateway = ordemServicoGateway;
+    public UseCaseOrdemServicoGet(VendaGateway vendaGateway) {
+        this.vendaGateway = vendaGateway;
     }
 
-    public ResponseEntity<List<OrdemServicoResponseFullDTO>> ListarOrdemServico()
-    { return ordemServicoGateway.ListarOrdemServico();}
-    public ResponseEntity<OrdemServicoResponseFullDTO> BuscarOrdemServicoPorId(@RequestParam Long id)
-    {return ordemServicoGateway.BuscarOrdemServicoPorId(id);}
-    public ResponseEntity<OrdemServicoResponseFullDTO> BuscarOrdemServicoPorcodigo(@RequestParam String codigo)
-    {return ordemServicoGateway.BuscarOrdemServicoPorcodigo(codigo);}
+    public ResponseEntity<List<CupomFiscal>> ListarVendas()
+    { return vendaGateway.ListarVendas();}
+    public ResponseEntity<CupomFiscal> BuscarVendaPorId(@RequestParam Long id)
+    {return vendaGateway.BuscarVendaPorId(id);}
+    public ResponseEntity<CupomFiscal> BuscarVendaPorCodigo(@RequestParam String codigo)
+    {return vendaGateway.BuscarVendaPorCodigo(codigo);}
 
 }

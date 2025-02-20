@@ -17,6 +17,7 @@ public class UseCaseClientePost {
 
     public ResponseEntity<ClienteDTO> NovoCliente(@RequestParam String nome,
                                                   @RequestParam String sobrenome,
+                                                  @RequestParam Long cpf,
                                                   @RequestParam LocalDate dataNascimento,
                                                   String logradouro,
                                                   @RequestParam String numero,
@@ -27,5 +28,5 @@ public class UseCaseClientePost {
                                                   @RequestParam Long telefone,
                                                   @RequestParam String email,
                                                   Double score)
-    {return clienteGateway.NovoCliente(nome, sobrenome, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
+    {return clienteGateway.NovoCliente(nome, sobrenome,cpf, dataNascimento, logradouro, numero, bairro, referencia, cep, prefixo, telefone, email, score);}
 }
